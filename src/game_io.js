@@ -11,6 +11,12 @@ const parseBounds = function(bounds){
   return {height,width};
 }
 
+const reverseParseInputs = function(parsedInputs){
+  return parsedInputs.map(parsedInput =>{
+    return [parsedInput.row, parsedInput.col];
+  });
+}
+
 const generatePrintableGrid = function(grid){
   return grid.map(row => '|' + row.join("|") + '|');
 }
@@ -18,3 +24,4 @@ const generatePrintableGrid = function(grid){
 exports.parseInputs = parseInputs;
 exports.generatePrintableGrid = generatePrintableGrid;
 exports.parseBounds = parseBounds;
+exports.reverseParseInputs = reverseParseInputs;
