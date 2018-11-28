@@ -42,22 +42,26 @@ const getCellRules = function(cell){
 }
 
 const evaluateNextGeneration = function(grid){
-  let nextGenWorld = createGrid(grid.length);
+  let nextGenWorld = new Array();
   for(let row=0; row<grid.length; row++){
     for(let col=0; col<grid[row].length; col++){
       let cell = grid[row][col];
       let cellRules = getCellRules(cell);
       let aliveNeighboursCount = countAliveNeighbours(row, col, grid);
-      nextGenWorld[row][col] = cellRules[aliveNeighboursCount];
+      let nextGenCell = cellRules[aliveNeighboursCount];
+      if(nextGenCell == 1){
+        nextGenWorld.push({row, col});
+      }
     }
   }
   return nextGenWorld;
 }
 
-const evaluateNthGeneration = function(grid, generationCount){
-  let nthGeneration = grid;
+const evaluateNthGeneration = function(currentGeneration, generationCount, height, width){
+  let nthGeneration = currentGeneration;
   while(generationCount){
-    nthGeneration = evaluateNextGeneration(nthGeneration);
+    let currentWorld = createWorld(nthGeneration, height, width);
+    nthGeneration = evaluateNextGeneration(currentWorld);
     generationCount--;
   }
   return nthGeneration;

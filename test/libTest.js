@@ -85,9 +85,7 @@ describe("evaluateNextGeneration", function(){
       {row: 1, col: 1},
       {row: 2, col: 0},
       {row: 2, col: 2}], 3, 3);
-    let expectedNextGen = [[0,1,0],
-      [1,0,1],
-      [0,1,0]];
+    let expectedNextGen = [{row: 0,col: 1},{row: 1,col: 0},{row: 1,col: 2},{row: 2,col: 1}];
     deepEqual(evaluateNextGeneration(world), expectedNextGen);
   });
 });
@@ -97,30 +95,20 @@ describe("evaluateNthGeneration", function(){
     deepEqual(evaluateNthGeneration(createGrid(0, 0), 0), []);
   });
   it("should return nth generation world for non empty world", function(){
-    let world = createWorld([
-      {row: 0, col: 0},
-      {row: 0, col: 2},
-      {row: 1, col: 1},
-      {row: 2, col: 0},
-      {row: 2, col: 2}], 3, 3);
-    let expectedOutput = [[0,1,0],
-      [1,0,1],
-      [0,1,0]];
-    deepEqual(evaluateNthGeneration(world, 1), expectedOutput);
-    world = createWorld([
-      {row: 0, col: 0},
-      {row: 0, col: 1},
-      {row: 0, col: 2},
-      {row: 1, col: 0},
-      {row: 1, col: 1},
-      {row: 1, col: 2},
-      {row: 2, col: 0},
-      {row: 2, col: 1},
-      {row: 2, col: 2}], 3);
-    expectedOutput = [[0,0,0],
-      [0,0,0],
-      [0,0,0]];
-    deepEqual(evaluateNthGeneration(world, 2), expectedOutput);
-    deepEqual(evaluateNthGeneration(world, 3), expectedOutput);
+    let currentGeneration = [{row: 0,col: 0},{row: 0,col: 2},{row: 1,col: 1},{row: 2,col: 0},{row: 2,col: 2}];
+    let expectedOutput = [{row: 0,col: 1},{row: 1,col: 0},{row: 1,col: 2},{row: 2,col: 1}];
+    deepEqual(evaluateNthGeneration(currentGeneration, 1, 3,3), expectedOutput);
+    currentGeneration = [{row: 0,col: 0},
+      {row: 0,col: 1},
+      {row: 0,col: 2},
+      {row: 1,col: 0},
+      {row: 1,col: 1},
+      {row: 1,col: 2},
+      {row: 2,col: 0},
+      {row: 2,col: 1},
+      {row: 2,col: 2}];
+    expectedOutput = [];
+    deepEqual(evaluateNthGeneration(currentGeneration, 2, 3, 3), expectedOutput);
+    deepEqual(evaluateNthGeneration(currentGeneration, 3,3, 3), expectedOutput);
   });
 });
