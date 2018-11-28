@@ -5,7 +5,7 @@ const contains = (list,element) => list.some(e=>e[0]===element[0] && e[1]===elem
 const isSame = (actualList,expectedList) => actualList.every(contains.bind(null,expectedList));
 const isSameArity = (actualList,expectedList) => actualList.length == expectedList.length;
 
-describe('nextGeneration',() => {
+describe.skip('nextGeneration',() => {
   it('should generate an empty generation for a current generation that contains only one live cell',() => {
     let currentGeneration = [[0,1]];
     let bounds = {topLeft: [0,0], bottomRight: [3,3]};
