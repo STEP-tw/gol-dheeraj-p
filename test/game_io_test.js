@@ -19,9 +19,9 @@ describe("parseBounds", function(){
 
 describe("generatePrintableGrid", function(){
   it("should return printable form of board in array for n>0 size grid", function(){
-    deepEqual(generatePrintableGrid(createGrid(2)), ["|0|0|","|0|0|"]);
+    deepEqual(generatePrintableGrid(createGrid(2, 2)), ["|0|0|","|0|0|"]);
   });
   it("should return empty array for 0 size grid", function(){
-    deepEqual(generatePrintableGrid(createGrid(0)), []);
+    deepEqual(generatePrintableGrid(createGrid(0, 0)), []);
   });
 });

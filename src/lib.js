@@ -1,10 +1,10 @@
-const createGrid = function(size){
-  let grid = new Array(size).fill(undefined);
-  return grid.map((cell)=>new Array(size).fill(0));
+const createGrid = function(height, width){
+  let grid = new Array(height).fill(undefined);
+  return grid.map((cell)=>new Array(width).fill(0));
 }
 
-const createWorld = function(aliveCells, size){
-  let world = createGrid(size);
+const createWorld = function(aliveCells, height, width){
+  let world = createGrid(height, width);
   for(let aliveCell of aliveCells){
     world[aliveCell.row][aliveCell.col] = 1;
   }
@@ -44,7 +44,7 @@ const getCellRules = function(cell){
 const evaluateNextGeneration = function(grid){
   let nextGenWorld = createGrid(grid.length);
   for(let row=0; row<grid.length; row++){
-    for(let col=0; col<grid.length; col++){
+    for(let col=0; col<grid[row].length; col++){
       let cell = grid[row][col];
       let cellRules = getCellRules(cell);
       let aliveNeighboursCount = countAliveNeighbours(row, col, grid);

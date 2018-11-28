@@ -9,26 +9,26 @@ const {
 } = require("../src/lib.js");
 
 describe("createGrid", function(){
-  it("should return empty array for input 0", function(){
-    deepEqual(createGrid(0), []);
+  it("should return empty array for 0x0 size", function(){
+    deepEqual(createGrid(0,0), []);
   });
-  it("should return 1x1 2D array for input 1 containing all 0's", function(){
-    deepEqual(createGrid(1),[[0]]);
+  it("should return grid of 1x1 size", function(){
+    deepEqual(createGrid(1,1),[[0]]);
   });
-  it("should return 3x3 2D array for input 3 containing all 0's", function(){
-    deepEqual(createGrid(3),[[0,0,0],[0,0,0],[0,0,0]]);
+  it("should return grid of 3x2 size", function(){
+    deepEqual(createGrid(3,2),[[0,0],[0,0],[0,0]]);
   });
 });
 
 describe("createWorld", function(){
   it("should return 2D array containing all 0's for empty input array", function(){
-    deepEqual(createWorld([], 1), [[0]]);
+    deepEqual(createWorld([], 1,1), [[0]]);
   });
   it("should return 2D array containing all 1's for input array containing positions for alive cells", function(){
-    deepEqual(createWorld([{row: 0, col:0}], 1), [[1]]);
+    deepEqual(createWorld([{row: 0, col:0}], 1, 1), [[1]]);
   });
   it("should return 2D array containing 1's for input array containing positions for alive cells", function(){
-    deepEqual(createWorld([{row: 0, col:0}], 2), [[1,0],[0,0]]);
+    deepEqual(createWorld([{row: 0, col:0}], 2, 2), [[1,0],[0,0]]);
   });
 });
 
@@ -44,7 +44,7 @@ describe("findNeighbours", function(){
       {row:0, col:1},
       {row:0, col:2}
     ];
-    deepEqual(findNeighbours(1,1,createGrid(3)), expectedOut);
+    deepEqual(findNeighbours(1,1,createGrid(3, 3)), expectedOut);
   });
   it("should return all neighbours for 2x2 world", function(){
     let expectedOut = [
@@ -52,7 +52,7 @@ describe("findNeighbours", function(){
       {"col": 1,"row": 1},
       {"col": 0,"row": 1}
     ];
-    deepEqual(findNeighbours(0,0,createGrid(2)), expectedOut);
+    deepEqual(findNeighbours(0,0,createGrid(2, 2)), expectedOut);
   });
 });
 
@@ -76,7 +76,7 @@ describe("countAliveNeighbours", function(){
 
 describe("evaluateNextGeneration", function(){
   it("should return empty world for empty world", function(){
-    deepEqual(evaluateNextGeneration(createGrid(0)), []);
+    deepEqual(evaluateNextGeneration(createGrid(0, 0)), []);
   });
   it("should return next generation world for non empty world", function(){
     let world = createWorld([
@@ -84,7 +84,7 @@ describe("evaluateNextGeneration", function(){
       {row: 0, col: 2},
       {row: 1, col: 1},
       {row: 2, col: 0},
-      {row: 2, col: 2}], 3);
+      {row: 2, col: 2}], 3, 3);
     let expectedNextGen = [[0,1,0],
       [1,0,1],
       [0,1,0]];
@@ -92,9 +92,9 @@ describe("evaluateNextGeneration", function(){
   });
 });
 
-describe("evaluateNextGeneration", function(){
+describe("evaluateNthGeneration", function(){
   it("should return empty world for empty world at any generation", function(){
-    deepEqual(evaluateNthGeneration(createGrid(0), 0), []);
+    deepEqual(evaluateNthGeneration(createGrid(0, 0), 0), []);
   });
   it("should return nth generation world for non empty world", function(){
     let world = createWorld([
@@ -102,7 +102,7 @@ describe("evaluateNextGeneration", function(){
       {row: 0, col: 2},
       {row: 1, col: 1},
       {row: 2, col: 0},
-      {row: 2, col: 2}], 3);
+      {row: 2, col: 2}], 3, 3);
     let expectedOutput = [[0,1,0],
       [1,0,1],
       [0,1,0]];
