@@ -6,9 +6,7 @@ const createGrid = function(height, width){
 const createWorld = function(aliveCells, height, width){
   let world = createGrid(height, width);
   for(let aliveCell of aliveCells){
-    if(world[aliveCell.row] != undefined){
       world[aliveCell.row][aliveCell.col] = 1;
-    }
   }
   return world;
 }
@@ -69,9 +67,22 @@ const evaluateNthGeneration = function(currentGeneration, generationCount, heigh
   return nthGeneration;
 }
 
+const isGreaterEqualTo = function(leftOperand, rightOperand){
+  return leftOperand >= rightOperand;
+}
+
+const isWithin = function(topLeft, bottomRight, positionToCheck){
+  let row = positionToCheck[0];
+  let col = positionToCheck[1];
+  let isRowInBound = isGreaterEqualTo(row,topLeft[0]) && isGreaterEqualTo(bottomRight[0], row); 
+  let isColInBound = isGreaterEqualTo(col,topLeft[1]) && isGreaterEqualTo(bottomRight[1],col);
+  return isRowInBound && isColInBound;
+}
+
 exports.createGrid = createGrid;
 exports.createWorld = createWorld;
 exports.findNeighbours = findNeighbours;
 exports.countAliveNeighbours = countAliveNeighbours;
 exports.evaluateNextGeneration = evaluateNextGeneration;
 exports.evaluateNthGeneration = evaluateNthGeneration;
+exports.isWithin = isWithin;

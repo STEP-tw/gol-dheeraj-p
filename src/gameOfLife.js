@@ -2,6 +2,8 @@ const lib = require('./lib.js');
 const IO = require('./game_io.js');
 
 const nextGeneration = function(currGeneration,bounds) {
+  let isWithinBounds = lib.isWithin.bind(null, bounds.topLeft, bounds.bottomRight);
+  currGeneration = currGeneration.filter(isWithinBounds);
   currGeneration = currGeneration.map((cell) => [cell[0] - bounds.topLeft[0], cell[1] - bounds.topLeft[1]]);
   currGeneration = IO.parseInputs(currGeneration);
   let {height, width} = IO.parseBounds(bounds);
