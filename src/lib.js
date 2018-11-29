@@ -67,9 +67,14 @@ const evaluateNthGeneration = function(currentGeneration, generationCount, heigh
   return nthGeneration;
 }
 
+const isWithin = function(topLeft,bottomRight,position){
+  return position[0]>=topLeft[0] && position[0]<=bottomRight[0] && position[1]>=topLeft[1] && position[1]<=bottomRight[1];
+}
+
 exports.createGrid = createGrid;
 exports.createWorld = createWorld;
 exports.findNeighbours = findNeighbours;
 exports.countAliveNeighbours = countAliveNeighbours;
 exports.evaluateNextGeneration = evaluateNextGeneration;
 exports.evaluateNthGeneration = evaluateNthGeneration;
+exports.isWithin = isWithin;
