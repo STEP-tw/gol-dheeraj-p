@@ -13,7 +13,7 @@ describe("parseInputs", function(){
 
 describe("parseBounds", function(){
   it("should return height and width for world of specified bounds", function(){
-    deepEqual(parseBounds({topLeft: [0,0], bottomRight: [3,3]}),{height: 3, width: 3}); 
+    deepEqual(parseBounds({topLeft: [0,0], bottomRight: [2,2]}),{height: 3, width: 3}); 
   });
 });
 
