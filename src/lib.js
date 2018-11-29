@@ -69,10 +69,6 @@ const evaluateNthGeneration = function(currentGeneration, generationCount, heigh
   return nthGeneration;
 }
 
-const isGreaterEqualTo = function(leftOperand, rightOperand){
-  return leftOperand >= rightOperand;
-}
-
 exports.createGrid = createGrid;
 exports.createWorld = createWorld;
 exports.findNeighbours = findNeighbours;
