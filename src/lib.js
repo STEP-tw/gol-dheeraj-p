@@ -41,14 +41,19 @@ const getCellRules = function(cell){
   return allCellRules[cell];
 }
 
+const applyRules = function(cell, grid){
+  let cellState = grid[cell.row][cell.col];
+  let cellRules = getCellRules(cellState);
+  let aliveNeighboursCount = countAliveNeighbours(cell.row, cell.col, grid);
+  return cellRules[aliveNeighboursCount];
+}
+
 const evaluateNextGeneration = function(grid){
   let nextGenWorld = new Array();
   for(let row=0; row<grid.length; row++){
     for(let col=0; col<grid[row].length; col++){
-      let cell = grid[row][col];
-      let cellRules = getCellRules(cell);
-      let aliveNeighboursCount = countAliveNeighbours(row, col, grid);
-      let nextGenCell = cellRules[aliveNeighboursCount];
+      let cell = {row, col};
+      let nextGenCell = applyRules(cell, grid);
       if(nextGenCell == 1){
         nextGenWorld.push({row, col});
       }
