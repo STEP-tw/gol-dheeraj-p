@@ -21,15 +21,23 @@ const cartesianProductOf = function(firstSet, secondSet){
   return result;
 }
 
-const findNeighbours = function(row, col, grid){
+const findNeighbourDeltas = function(){
   let rowDeltaSet = [0,1,-1];
   let columnDeltaSet = [0,1,-1];
-  let neighbourDeltas = cartesianProductOf(rowDeltaSet, columnDeltaSet).slice(1); //slice(1) to remove delta (0,0)
-  let neighbours = neighbourDeltas.map(delta => {
-    let neighbourRow = row + delta[0];
-    let neighbourCol = col + delta[1];
-    return {row : neighbourRow, col : neighbourCol};
-  }); 
+  return cartesianProductOf(rowDeltaSet, columnDeltaSet).slice(1); //slice(1) to remove delta (0,0)
+}
+
+const addDelta = function(cellPosition, delta){
+  let row = cellPosition.row + delta[0];
+  let col = cellPosition.col + delta[1];
+  return {row, col};
+}
+
+const findNeighbours = function(row, col, grid){
+  let neighbourDeltas = findNeighbourDeltas();
+  let cellPosition = {row, col};
+  let addDeltaToCell = addDelta.bind(null, cellPosition); 
+  let neighbours = neighbourDeltas.map(addDeltaToCell); 
   return neighbours.filter((cell) => {
     return grid[cell.row] != undefined && grid[cell.row][cell.col] != undefined ;
   });
