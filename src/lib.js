@@ -48,18 +48,23 @@ const applyRules = function(cell, grid){
   return cellRules[aliveNeighboursCount];
 }
 
+const getAliveCells = function(world){
+  let aliveCells =  world.filter( cell => cell.state );
+  return aliveCells.map(cell => {
+    return {row: cell.row, col: cell.col};
+  });
+}
+
 const evaluateNextGeneration = function(grid){
   let nextGenWorld = new Array();
   for(let row=0; row<grid.length; row++){
     for(let col=0; col<grid[row].length; col++){
       let cell = {row, col};
       let nextGenCell = applyRules(cell, grid);
-      if(nextGenCell == 1){
-        nextGenWorld.push({row, col});
-      }
+      nextGenWorld.push({row, col, state: nextGenCell});
     }
   }
-  return nextGenWorld;
+  return getAliveCells(nextGenWorld);
 }
 
 const evaluateNthGeneration = function(currentGeneration, generationCount, height, width){
