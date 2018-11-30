@@ -22,7 +22,9 @@ const cartesianProductOf = function(firstSet, secondSet){
 }
 
 const findNeighbours = function(row, col, grid){
-  let neighbourDeltas = cartesianProductOf([0,1,-1],[0,1,-1]).slice(1);
+  let rowDeltaSet = [0,1,-1];
+  let columnDeltaSet = [0,1,-1];
+  let neighbourDeltas = cartesianProductOf(rowDeltaSet, columnDeltaSet).slice(1); //slice(1) to remove delta (0,0)
   let neighbours = neighbourDeltas.map(delta => {
     let neighbourRow = row + delta[0];
     let neighbourCol = col + delta[1];
