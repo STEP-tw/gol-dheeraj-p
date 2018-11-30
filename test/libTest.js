@@ -5,7 +5,8 @@ const {
   findNeighbours,
   countAliveNeighbours,
   evaluateNextGeneration,
-  evaluateNthGeneration
+  evaluateNthGeneration,
+  cartesianProductOf
 } = require("../src/lib.js");
 
 describe("createGrid", function(){
@@ -34,24 +35,18 @@ describe("createWorld", function(){
 
 describe("findNeighbours", function(){
   it("should return all neighbours for 3x3 world", function(){
-    let expectedOut = [
-      {row:1, col:2},
-      {row:2, col:2},
-      {row:2, col:1},
-      {row:2, col:0},
-      {row:1, col:0},
-      {row:0, col:0},
-      {row:0, col:1},
-      {row:0, col:2}
-    ];
+    let expectedOut = [ { row: 1, col: 2 },
+      { row: 1, col: 0 },
+      { row: 2, col: 1 },
+      { row: 2, col: 2 },
+      { row: 2, col: 0 },
+      { row: 0, col: 1 },
+      { row: 0, col: 2 },
+      { row: 0, col: 0 } ];
     deepEqual(findNeighbours(1,1,createGrid(3, 3)), expectedOut);
   });
   it("should return all neighbours for 2x2 world", function(){
-    let expectedOut = [
-      {"col": 1,"row": 0},
-      {"col": 1,"row": 1},
-      {"col": 0,"row": 1}
-    ];
+    let expectedOut =  [ { row: 0, col: 1 }, { row: 1, col: 0 }, { row: 1, col: 1 } ];
     deepEqual(findNeighbours(0,0,createGrid(2, 2)), expectedOut);
   });
 });
@@ -110,5 +105,24 @@ describe("evaluateNthGeneration", function(){
     expectedOutput = [];
     deepEqual(evaluateNthGeneration(currentGeneration, 2, 3, 3), expectedOutput);
     deepEqual(evaluateNthGeneration(currentGeneration, 3,3, 3), expectedOutput);
+  });
+});
+
+describe("cartesianProductOf", function(){
+  it("Should return empty set for cartesian product of two empty sets", function(){
+    deepEqual(cartesianProductOf([],[]), []);
+  });
+
+  it("Should return cartesian product of two non empty sets of same number of elements", function(){
+    deepEqual(cartesianProductOf([0],[1]), [[0,1]]);
+    deepEqual(cartesianProductOf([0,1],[1,0]), [[0,1],[0,0],[1,1],[1,0]]);
+  });
+
+  it("Should return cartesian product of two non empty sets where first set has more elements than second", function(){
+    deepEqual(cartesianProductOf([0,1],[1]), [[0,1],[1,1]]);
+  });
+
+  it("Should return cartesian product of two non empty sets where second set has more elements than first", function(){
+    deepEqual(cartesianProductOf([1],[1,0]), [[1,1],[1,0]]);
   });
 });

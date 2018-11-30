@@ -6,22 +6,28 @@ const createGrid = function(height, width){
 const createWorld = function(aliveCells, height, width){
   let world = createGrid(height, width);
   for(let aliveCell of aliveCells){
-      world[aliveCell.row][aliveCell.col] = 1;
+    world[aliveCell.row][aliveCell.col] = 1;
   }
   return world;
 }
 
-const findNeighbours = function(row, col, grid){
-  let neighbours = new Array();
-  neighbours.push({row, col : col + 1});
-  neighbours.push({row : row + 1, col : col + 1});
-  neighbours.push({row : row + 1, col});
-  neighbours.push({row : row + 1, col : col - 1});
-  neighbours.push({row, col : col - 1});
-  neighbours.push({row : row - 1, col : col - 1});
-  neighbours.push({row : row -1 , col});
-  neighbours.push({row : row - 1, col : col + 1});
+const cartesianProductOf = function(firstSet, secondSet){
+  let result = new Array();
+  for(let firstSetElement of firstSet){
+    for(let secondSetElement of secondSet){
+      result.push([firstSetElement, secondSetElement]);
+    }
+  }
+  return result;
+}
 
+const findNeighbours = function(row, col, grid){
+  let neighbourDeltas = cartesianProductOf([0,1,-1],[0,1,-1]).slice(1);
+  let neighbours = neighbourDeltas.map(delta => {
+    let neighbourRow = row + delta[0];
+    let neighbourCol = col + delta[1];
+    return {row : neighbourRow, col : neighbourCol};
+  }); 
   return neighbours.filter((cell) => {
     return grid[cell.row] != undefined && grid[cell.row][cell.col] != undefined ;
   });
@@ -96,3 +102,4 @@ exports.countAliveNeighbours = countAliveNeighbours;
 exports.evaluateNextGeneration = evaluateNextGeneration;
 exports.evaluateNthGeneration = evaluateNthGeneration;
 exports.isWithin = isWithin;
+exports.cartesianProductOf = cartesianProductOf;
